@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: ../
+      dockerfile: config/Dockerfile
+    container_name: dark-web
+    restart: always
+    expose:
+      - "80"
+    networks:
+      - deploy_net 
+
+networks:
+  deploy_net:
+    external: true
