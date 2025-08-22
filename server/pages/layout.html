@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="" />
   <meta name="keywords" content="" />
-  <meta name="author" content="" />
+  <meta name="author" content="Pravalika J" />
   <title>{{ template "title" .}}</title>
-  <!-- <link rel="icon" href="/assets/tor.png" /> -->
+  <!-- <link rel="icon" href="&#128075;" /> -->
 
   <!-- dns prefetch -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -19,8 +19,8 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link prefetch
-    href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet" />
 
   <!-- Google Icons -->
@@ -35,11 +35,11 @@
   <style>
     :root {
       --theme: white;
-      --pico-font-family: "Anonymous Pro", monospace;
-      --pico-background-color: #06070e;
+      --pico-font-family: "Inter", sans-serif;
+      --pico-background-color: #080d14;
       --pico-color: var(--theme);
-      --pico-primary: #ec4e20;
-      --pico-primary-hover: #ec4e20;
+      --pico-primary: #4a90e2;
+      --pico-primary-hover: #4a90e2;
 
       scroll-behavior: smooth;
       scroll-padding: 15%;
@@ -49,11 +49,11 @@
     :root:not([data-theme="dark"]),
     :host(:not([data-theme="dark"])) {
       color-scheme: light;
-      --theme: #06070e;
+      --theme: #080d14;
       --pico-background-color: white;
       --pico-color: var(--theme);
-      --pico-primary: #ec4e20;
-      --pico-primary-hover: #ec4e20;
+      --pico-primary: #4a90e2;
+      --pico-primary-hover: #4a90e2;
     }
 
     nav {
@@ -64,7 +64,6 @@
       top: 0;
 
       #logo {
-        font-size: 1.2rem;
         font-style: italic;
         font-weight: bold;
 
@@ -126,6 +125,10 @@
         top: 0;
         left: 50vw;
       }
+
+      &.closing nav aside {
+        animation: slideOut 0.2s ease-in-out forwards;
+      }
     }
 
     @keyframes slideIn {
@@ -135,6 +138,16 @@
 
       to {
         transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(100%);
       }
     }
   </style>
@@ -159,6 +172,17 @@
           .matchMedia("(width < 700px)")
           .addEventListener("change", (e) => (this.mobileView = e.matches));
       },
+      animateNavMenu() {
+        if (this.showSidebar) {
+          this.$el.classList.add("closing");
+          setTimeout(() => {
+            this.showSidebar = !this.showSidebar;
+            this.$el.classList.remove("closing");
+          }, 200);
+        } else {
+          this.showSidebar = !this.showSidebar;
+        }
+      },
     };
   </script>
 </head>
@@ -168,7 +192,7 @@
   <nav class="container-fluid" id="navbar">
     <ul>
       <li id="logo">
-        <a href="/">The Dark Web</a>
+        <a href="/#">👋 Pravalika J</a>
       </li>
     </ul>
     <template x-if="mobileView">
@@ -184,7 +208,7 @@
   </nav>
 
   <!-- Sidebar -->
-  <dialog id="sidebar" :open="showSidebar" @click="showSidebar = !showSidebar">
+  <dialog id="sidebar" :open="showSidebar" @click="animateNavMenu()">
     <nav>
       <aside>{{ template "links" .}}</aside>
     </nav>
@@ -195,7 +219,13 @@
 
   <!-- Footer -->
   <footer class="container" style="text-align: center">
-    <p>&copy;</p>
+    <section>
+      <img src="" alt="Footer Image" />
+      <p>Having<br />a great idea?</p>
+      <div>
+        <a href="">Social Media Links</a>
+      </div>
+    </section>
   </footer>
 
   <!-- Alpine.js Plugins -->
@@ -211,16 +241,16 @@
 {{define "links"}}
 <ul>
   <li>
-    <a href="/#"><b>Home</b></a>
-  </li>
-  <li>
-    <a href="/#history"><b>History</b></a>
-  </li>
-  <li>
-    <a href="/#safties"><b>Safties</b></a>
-  </li>
-  <li>
     <a href="/#about"><b>About</b></a>
+  </li>
+  <li>
+    <a href="/#services"><b>Services</b></a>
+  </li>
+  <li>
+    <a href="/#blog"><b>Blog</b></a>
+  </li>
+  <li>
+    <a href="/#contact"><b>Contact</b></a>
   </li>
   <li>
     <button class="mode" @click="$data.theme = ($data.theme === 'light') ? 'dark' : 'light'">

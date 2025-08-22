@@ -25,10 +25,12 @@ var (
 
 	_indexTempl *template.Template
 	_aboutTempl *template.Template
+	_blogTempl *template.Template
 	_errorTempl *template.Template
 
 	_routes = routes{
 		"/":       indexPage,
+		"/blog/":  blogPage,
 		"/404/":   pageNotFound,
 		"/about/": aboutPage,
 		"/error/": errorPage,
@@ -38,6 +40,7 @@ var (
 func init() {
 	_indexTempl = getTemplate("index.html")
 	_aboutTempl = getTemplate("about.html")
+	_blogTempl = getTemplate("blog.html")
 	_errorTempl = getTemplate("error.html")
 }
 
@@ -72,6 +75,13 @@ func indexPage(w http.ResponseWriter, r *http.Request) {
 
 func aboutPage(w http.ResponseWriter, r *http.Request) {
 	if err := _aboutTempl.Execute(w, nil); err != nil {
+		slog.Error(err.Error())
+		http.Redirect(w, r, "/404", http.StatusFound)
+	}
+}
+
+func blogPage(w http.ResponseWriter, r *http.Request) {
+	if err := _blogTempl.Execute(w, nil); err != nil {
 		slog.Error(err.Error())
 		http.Redirect(w, r, "/404", http.StatusFound)
 	}
