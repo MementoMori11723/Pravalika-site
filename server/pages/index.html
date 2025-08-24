@@ -3,5 +3,93 @@
 
 <!-- Content -->
 {{define "main"}}
-<section>Index</section>
+<!-- Data Section -->
+<script>
+  const person = {
+    hero: {
+      name: "Pravalika J",
+      sub: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      img: `https://www.stockvault.net/data/2011/05/31/124348/thumb16.jpg`,
+      img_txt: "User Profile",
+      links: [
+        {
+          url: "https://api.dicebear.com/9.x/adventurer/svg",
+          txt: "Linkedin",
+        },
+        {
+          url: "https://api.dicebear.com/9.x/adventurer/svg",
+          txt: "Github",
+        },
+      ],
+    },
+    about: {
+      title: {
+        txt: "Specialist",
+        info: "Phasellus a elit condimentum, bibendum nulla ac, aliquam enim.",
+      },
+      img: "https://static.vecteezy.com/system/resources/thumbnails/049/855/347/small_2x/nature-background-high-resolution-wallpaper-for-a-serene-and-stunning-view-photo.jpg",
+      img_txt: "About Image",
+      info: "Suspendisse pellentesque dictum ex, eu elementum nibh bibendum at.",
+    },
+  };
+</script>
+
+<!-- Style Sections -->
+<style>
+  @media screen and (orientation: portrait) {
+    #hero {
+      & .flex {
+        order: 2;
+      }
+
+      & img {
+        order: 1;
+      }
+    }
+  }
+</style>
+
+<!-- Content Section -->
+<section x-data="person" class="container">
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="grid" style="grid-template-columns: 2">
+      <div class="flex" style="text-align: justify">
+        <p style="font-size: 1.2rem">
+          <span
+            style="color: var(--pico-primary); font-weight: bold"
+            x-text="hero.name"
+          ></span>
+          <span x-text="hero.sub"></span>
+        </p>
+        <div style="justify-self: flex-start; width: 100%">
+          <template x-for="link in hero.links">
+            <a style="margin: 0.5rem" :href="link.url" x-text="link.txt"></a>
+          </template>
+        </div>
+      </div>
+      <img :src="hero.img" width="100%" height="100%" :alt="hero.img_txt" />
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="grid" style="grid-template-columns: 2">
+      <img :src="about.img" width="100%" height="100%" :alt="about.img_txt" />
+      <div class="flex" style="text-align: justify">
+        <p style="margin-bottom: 1rem">
+          <span x-text="about.title.txt"></span>
+          <span x-text="about.title.info"></span>
+        </p>
+        <p x-text="about.info"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services"></section>
+
+  <!-- Experiance Section -->
+  <section id="experiance"></section>
+</section>
 {{end}}

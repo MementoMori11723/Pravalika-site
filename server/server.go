@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 type (
@@ -25,15 +27,16 @@ var (
 
 	_indexTempl *template.Template
 	_aboutTempl *template.Template
-	_blogTempl *template.Template
+	_blogTempl  *template.Template
 	_errorTempl *template.Template
 
 	_routes = routes{
-		"/":       indexPage,
-		"/blog/":  blogPage,
-		"/404/":   pageNotFound,
-		"/about/": aboutPage,
-		"/error/": errorPage,
+		"/":          indexPage,
+		"/blog/":     blogPage,
+		"/blog/:id/": blogSubPage,
+		"/404/":      pageNotFound,
+		"/about/":    aboutPage,
+		"/error/":    errorPage,
 	}
 )
 
@@ -75,6 +78,15 @@ func indexPage(w http.ResponseWriter, r *http.Request) {
 
 func aboutPage(w http.ResponseWriter, r *http.Request) {
 	if err := _aboutTempl.Execute(w, nil); err != nil {
+		slog.Error(err.Error())
+		http.Redirect(w, r, "/404", http.StatusFound)
+	}
+}
+
+func blogSubPage(w http.ResponseWriter, r *http.Request) {
+	// id := r.PathValue("id")
+	uuid.New()
+	if err := _blogTempl.Execute(w, nil); err != nil {
 		slog.Error(err.Error())
 		http.Redirect(w, r, "/404", http.StatusFound)
 	}

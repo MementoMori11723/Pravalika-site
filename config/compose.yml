@@ -9,7 +9,13 @@ services:
       - "80"
     networks:
       - deploy_net 
+    volumes:
+      - deploy_sqlite_dir:/data
 
 networks:
   deploy_net:
+    external: true
+
+volumes:
+  deploy_sqlite_dir: 
     external: true
